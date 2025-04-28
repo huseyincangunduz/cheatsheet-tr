@@ -116,6 +116,5 @@ docker exec konteyner_idsi_yada_ismi /usr/bin/mysqldump -u root --password=root 
 
 Dockerda çalışan mysql instancesında bu şekilde import edilebilir
 ```bash
-docker exec -i konteyner_idsi_yada_ismi mysql -ukullanıcıismi -pşifre123456 veritabanıismi
-
+docker exec -i konteyner_idsi_yada_ismi mysql -ukullanıcıismi -pşifre123456 veritabanıismi < backup.sql
 ```
