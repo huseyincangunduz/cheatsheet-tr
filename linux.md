@@ -29,7 +29,7 @@ sudo komut # bir komutu yönetici olarak çalıştırmanıza olanak tanır. Yön
 
 ```
 
-# Uygulama kurma
+## Uygulama kurma
 
 - Eğer çalıştığınız Linux distrosu Debian, Ubuntu ya da benzeri bir işletim sistemi ise `apt` komutu kullanılır.
 
@@ -51,18 +51,64 @@ fastfetch
 
 
 ```
-➜  ~ nest
+> nest
 bash: nest: komut bulunamadı...
 'nest' paketi 'nest' komutunu sağlaması için kurulsun mu? [N/y] #y basılıp kurulabilir
 ```
 
 - Sistem deposundan olmayan bir paket dışarıdan repo eklenerek kurulabilir. bu durumda eklenen repo'dan emin olunmalıdır
 
-# ‼️‼️‼️Tehlikeli komutlar
+## Konsol çıktısını dosyaya kaydetme (stdout)
+
+Eğer komuttan çıkan stdout akışını dosyaya kaydetmek isterseniz, bunu ">" ile yapabilirsiniz
+
+```
+komut > cikti.txt
+```
+
+`cikti.txt`yi herhangi bir not defteri uygulamasıyla açarsanız, uygulama çıktısını görebilirsiniz.
+
+Örnek: 
+```
+mysqldump db_name > yedek.sql
+```
+
+Eğer `>` yerine `>>` kullanırsanız, bu dosyayı silyaz yapmak yerine sonuna ekler.
+
+## Konsolda input verme (stdin)
+
+Küçüktür işaretinin tersi ile (`<`) dosyalarınızı komuta okutabilirsiniz
+
+```bash
+cat < notlar.txt
+```
+
+burada `notlar.txt` dosyasını `cat` komutu vasıtasıyla ekrana okutacaktır. Başka bir örnek ise önceki örnekte yapılan mysql yedeğini yüklemektir
+
+```
+mysql --user=user_name -p"sizin parolanız" db_name < yedek.sql
+```
+
+## Uygulamadan uygulamaya veri gönderme (Pipe)
+
+Bir uygulamadan diğer uygulamaya veri göndermek için pipe (`|`) operatörü kullanabilirsiniz
+
+
+```bash
+cat dosya.txt | grep -e "Aranan metin" 
+```
+
+Eğer stdin'den veri almayı desteklemiyorsa, komutun sonuna `-` eklenebilir. Örn: veritabanı çıktısını vimde düzenlemek için:
+```bash
+mysqldump database | vim -
+```
+
+
+## ‼️‼️‼️Tehlikeli komutlar
 
 ```bash
 rm -rf / 
-# Kök pathini tamamen siler. Ancak bu işletim sisteminizin diskiyle sınırlı kalmayacaktır. Mountlanmış ne kadar disk varsa onlarla vedalaşmanız gerekecek
+# Kök pathini tamamen siler. Ancak bu işletim sisteminizin diskiyle sınırlı kalmayacaktır. Mountlanmış (taktığınız ve dosya yöneticinizde "bağla" seçeneğini tıklamış olduğunuz) ne kadar disk varsa onlarla vedalaşmanız gerekecek
 
 command >/dev/sda 
 # bir komutun çıktısını diske yazar. Dolayısıyla diski siler. işletim sisteminizin çalıştığı disk de olabilir

@@ -82,7 +82,9 @@ Ekstra parametreler
 ...
 
 ```
+
 Burada -it ile terminal işlemleri yapabilirsiniz
+
 ```
 ➜  ~ docker exec -it mysql-local-db-1 mysql       
 Welcome to the MySQL monitor.  Commands end with ; or \g.
