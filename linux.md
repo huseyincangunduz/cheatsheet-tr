@@ -2,14 +2,14 @@
 
 ## Temel komutlar
 
-> Çoğu basit komut Unix benzeri olduğu için MacOS'e benzemektedir. 
+> Çoğu basit komut Unix benzeri olduğu için MacOS'e benzemektedir.
 
 ```bash
 cd ./klasor # Klasörün içine girer
 
 cd ./project/src # project içindeki src klasörünün içine girer
 
-rm -rf ./klasor # belirtilen klasörü içindekilerle beraber siler. 
+rm -rf ./klasor # belirtilen klasörü içindekilerle beraber siler.
 # -r => Recursive => iç içe
 # -f => Force => Zorla yaptır
 
@@ -21,7 +21,7 @@ rm file.txt # file.txt dosyasını siler
 
 cat file.txt # file.txt dosyasının içeriğini terminale basar
 
-nano file.txt # file.txt dosyasını text editör ile açar. Kaydetmek için CTRL+O ve ENTER yapılır. Daha fazla işlem CTRL tuşu ile ekranın aşağısında ^ karakterinden sonra başlayan harfe basarak yapılabilir 
+nano file.txt # file.txt dosyasını text editör ile açar. Kaydetmek için CTRL+O ve ENTER yapılır. Daha fazla işlem CTRL tuşu ile ekranın aşağısında ^ karakterinden sonra başlayan harfe basarak yapılabilir
 
 vim file.txt # file.txt dosyasını text editör ile açar. Daha fazla bilgi: vim.md
 
@@ -38,17 +38,16 @@ sudo apt-get update
 #Sistemdeki paket reposu güncellenmeden uygulama kurulması sisteminizi bozabilir
 sudo apt-get install fastfetch
 fastfetch
-``` 
+```
 
 - Eğer çalıştığınız Linux distrosu Red Hat, Fedora, Alma, ya da Rocky ise `dnf` komutu kullanılır.
 
 ```bash
 sudo dnf install fastfetch
 fastfetch
-``` 
+```
 
 - Paket ismini bilmiyorsanız kullandığınız işletim sistemi ile beraber paket ismi aratılmalıdır. Ama bazen komutu yazıp enterlarsanız, ve komut bulunamadı hatasından sonra da bunu görüyorsanız, işletim sistemi muhtemelen buradan da kurmanıza izin verecektir
-
 
 ```
 > nest
@@ -68,7 +67,8 @@ komut > cikti.txt
 
 `cikti.txt`yi herhangi bir not defteri uygulamasıyla açarsanız, uygulama çıktısını görebilirsiniz.
 
-Örnek: 
+Örnek:
+
 ```
 mysqldump db_name > yedek.sql
 ```
@@ -89,28 +89,67 @@ burada `notlar.txt` dosyasını `cat` komutu vasıtasıyla ekrana okutacaktır. 
 mysql --user=user_name -p"sizin parolanız" db_name < yedek.sql
 ```
 
-## Uygulamadan uygulamaya veri gönderme (Pipe)
+## Komuttan komuta veri gönderme (Pipe)
 
 Bir uygulamadan diğer uygulamaya veri göndermek için pipe (`|`) operatörü kullanabilirsiniz
 
-
 ```bash
-cat dosya.txt | grep -e "Aranan metin" 
+cat dosya.txt | grep -e "Aranan metin"
 ```
 
 Eğer stdin'den veri almayı desteklemiyorsa, komutun sonuna `-` eklenebilir. Örn: veritabanı çıktısını vimde düzenlemek için:
+
 ```bash
 mysqldump database | vim -
 ```
 
+## Bir script oluşturma
+
+Dilediğiniz text editorü kullanarak dosyanızı oluşturabilir ve .sh uzantısıyla kaydedebilirsiniz
+
+```bash
+nano script.sh # Nano editör
+vim script.sh # Vim editör
+code script.sh # VS Code klasörü eğer $PATH değişkenine ekliyse
+# vscode olarak çalıştırılabilir. Linux'ta path variable'ına otomatik olarak
+# eklenir ancak macos'ta f1 > "Shell Command: Install 'code' command in PATH"
+# seçeneğini çalıştırmalısınız
+gedit script.sh # gnome masaüstü ortamında gedit ile açmak için
+kwrite script.sh # kde plasma ortamında kwrte ile açmak için
+```
+
+Bu scriptin içerisine terminalde çalıştırabildiğiniz komutları sırasıyla yazıp kaydedebilirsiniz.
+
+```bash
+#script.sh
+
+export IMAGE_NAME='hcangunduz/kompaney-api'
+export IMAGE_TAG='latest'
+docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+docker push ${IMAGE_NAME}:${IMAGE_TAG}
+```
+
+Kaydettikten sonra dosyayı çalıştırabilmek için ayrıca son bir şey kalıyor.
+
+```bash
+sudo chmod +xrw script.sh
+```
+
+Scripti çalıştırabilmek için terminalde bunu çalıştırabilirsiniz
+
+```bash
+./script.sh
+```
+
+> Parametreler, İf, for kondisyonları ile ilgili daha fazla detayı [bash-script-extra.md](bash-script-extra.md) ye göz atabilirsiniz.
 
 ## ‼️‼️‼️Tehlikeli komutlar
 
 ```bash
-rm -rf / 
+rm -rf /
 # Kök pathini tamamen siler. Ancak bu işletim sisteminizin diskiyle sınırlı kalmayacaktır. Mountlanmış (taktığınız ve dosya yöneticinizde "bağla" seçeneğini tıklamış olduğunuz) ne kadar disk varsa onlarla vedalaşmanız gerekecek
 
-command >/dev/sda 
+command >/dev/sda
 # bir komutun çıktısını diske yazar. Dolayısıyla diski siler. işletim sisteminizin çalıştığı disk de olabilir
 
 dd if=/dev/random of=/dev/sda
