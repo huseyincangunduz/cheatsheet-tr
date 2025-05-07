@@ -6,19 +6,17 @@ Docker'ın sağladığı işlevleri daha da kolaylaştıran bir araçtır.
 Bu araç bir yml dosyasını referans alarak servislerinizi yönetmenizi sağlar.
 
 ```yml
-
 # Bu dosyaların syntaxları versiyona göre değişebiliyor. ancak siz belirtmeyebilirsiniz çünkü deprecated oldu
 version: "3.5"
 
 services:
-
   # Servis ismi
   web:
     # Kullandığı imaj
     image: kompaney-web
-    # Port ayarıdır. Burada ilk bilgisayarınızda açılacak port yazılır, ardından iki nokta üst üste eklenip konteynırınızın, ve yahut uygulamanızın kabul ettiği port yazılır. 
-    # Örn: Bilgisayarınızda 80 ancak uygulamanız 666 portunda ayağa kalkıyorsa "80:666" olarak yazılır 
-    # Eğer ikisi aynıysa (örn 80 ise) "80" diye de geçebilirsiniz 
+    # Port ayarıdır. Burada ilk bilgisayarınızda açılacak port yazılır, ardından iki nokta üst üste eklenip konteynırınızın, ve yahut uygulamanızın kabul ettiği port yazılır.
+    # Örn: Bilgisayarınızda 80 ancak uygulamanız 666 portunda ayağa kalkıyorsa "80:666" olarak yazılır
+    # Eğer ikisi aynıysa (örn 80 ise) "80" diye de geçebilirsiniz
     ports:
       - "80:80"
       - "443:443"
@@ -26,7 +24,7 @@ services:
     # Aynı klasördeki dosyaları konteynırınızın kullanması için volume ayarını yapabilirsiniz. Sırasıyla aralarda iki nokta üst üste olacak şekilde
     # - bilgisayardaki aynı klasörden başlayacak şekilde path
     # - konteynırınızda denk gelecek olan path
-    # - eğer üstüne yazıp değiştirsin istemiyorsanız "ro" 
+    # - eğer üstüne yazıp değiştirsin istemiyorsanız "ro"
     volumes:
       - ./config/nginx/kompaney-web.conf:/etc/nginx/nginx.conf:ro
       - ./certs:/certs
@@ -38,7 +36,7 @@ services:
     # Buradaki örnekte veritabanı tipi vs. vereceğiz
     environment:
       - NX_MICROSERVICE_TYPE=KAFKA
-      # Fun fact: konteynırlar bilgisayarınıza 172.17.0.1 ipsi ile istek atabilir 
+      # Fun fact: konteynırlar bilgisayarınıza 172.17.0.1 ipsi ile istek atabilir
       - NX_KAFKA_URL=172.17.0.1:9092
       # Fun fact: konteynırlar "servis isimleri" ile birbirlerine istek atabilir
       - NX_MONGO_URL=my-mongodb:27017
@@ -49,7 +47,6 @@ services:
       - NX_SECRET_JWT=${NX_SECRET_JWT}
       - NX_SECRET_PW=${NX_SECRET_PW}
 
- 
   my-mongodb:
     image: mongo:4.2.3-bionic
     container_name: sifali-veritabani
@@ -61,8 +58,6 @@ services:
       - ./mongo-entrypoint:/docker-entrypoint-initdb.d
       - ./mongo-data:/data/db
       - ./mongoconfig:/data/configdb
-
-
 ```
 
 Bu dosya docker-compose.yml olarak kaydedilir ve bu şekilde çalıştırılır.
@@ -72,7 +67,7 @@ docker compose up
 ```
 
 - Bu andan itibaren servislerinizin çıktılarını döndürecektir.
-Kapatmak için CTRL+C yapabilirsiniz.
+  Kapatmak için CTRL+C yapabilirsiniz.
 
 Arkaplanda çalışsın isterseniz sonuna `-d` eklemelisiniz
 
@@ -90,7 +85,7 @@ Sadece spesifik bir servisi kapatıp açacaksanız:
 
 ```
 docker compose stop api
-docker compose start api
+docker compose up -d api
 ```
 
 Logları görüntülemek için ("-f" kapanana kadar bekletir):
